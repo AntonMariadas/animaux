@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+    {% block titre %} Affichage de l'animal {{animal.nom | lower}}  {% endblock %}
+
+    {% block body %}
+        <div class="row align-items-center">
+            <div class="col-2 text-center">
+                <img src="{{asset('images/' ~ animal.nom ~ '.png' )}}" alt="">
+                
+            </div>
+            <div class="col-auto">
+                <div> Description : {{ animal.description }}</div>
+                <div> Poids : {{ animal.poids }}</div>
+                {% if animal.dangereux %}
+                    Dangereux : <span class="badge badge-danger">Oui</span>
+                {% else %}
+                    Dangereux : <span class="badge badge-success">Non</span>
+                {% endif %}
+            </div>
+            <div> <a href="{{ path('afficher_famille', {'id': animal.famille.id}) }}" class="btn btn-primary">{{ animal.famille.libelle }}</a></div>
+            {% for continent in animal.continents %}
+                <a class="btn btn-warning" href="{{ path('afficher_continent', {'id': continent.id}) }}">{{ continent.libelle }}</a>
+            {% endfor %}
+            <div>
+            {% for dispose in animal.disposes %}
+                <a class="btn btn-info" href="{{ path('personne', {'id': dispose.personne.id}) }}">{{ dispose.personne.nom }}</a>
+            {% endfor %}
+            </div>
+        </div>
+
+    {% endblock %}
+
+
+
